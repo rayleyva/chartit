@@ -9,12 +9,13 @@
 
 """
 
-from bottle import Bottle
+from bottle import Bottle, template
 
 
 app = Bottle()
 
 
 @app.route('/', method='GET')
-def setup_complete():
-    return "Environment Configured Correctly."
+def home():
+    """The home page handler serves a static template."""
+    return template('home')

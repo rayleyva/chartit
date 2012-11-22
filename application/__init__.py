@@ -6,6 +6,7 @@ ChartIt: A tutorial case study for python web development.
 """
 
 import os
+import sys
 import bottle
 from application.app import app
 
@@ -18,7 +19,15 @@ def in_gae_production():
     return True if "Google App Engine" in os.environ.get('SERVER_SOFTWARE', '') else False
 
 
+def running_as_unittest():
+    """Verify whether the current execution context is within a unit test run.
+    :returns: True when invoked as part of a unit test"""
+    return "nosetests" in sys.argv
+
+
 if not in_gae_production():
     bottle.debug(True)
 
-bottle.run(app=app, server='gae')
+if not running_as_unittest:
+    # Avoid complaints about missing GAE libs in virtualenv
+    bottle.run(app=app, server='gae')
