@@ -7,7 +7,7 @@ Unit testing of the app.py module.
 
 
 import unittest
-from application.app import home
+from main.app import home
 
 
 class TestHome(unittest.TestCase):

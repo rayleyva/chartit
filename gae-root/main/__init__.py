@@ -7,8 +7,12 @@ ChartIt: A tutorial case study for python web development.
 
 import os
 import sys
-import bottle
-from application.app import app
+
+
+def add_to_path(path):
+    """Add a dir relative to this file location, to the sys.path"""
+    this_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, os.path.join(this_dir, path))
 
 
 def in_gae_production():
@@ -25,9 +29,15 @@ def running_as_unittest():
     return "nosetests" in sys.argv
 
 
+add_to_path(os.path.join('..', 'lib'))
+import bottle
+from main.app import app
+
+
 if not in_gae_production():
     bottle.debug(True)
 
 if not running_as_unittest:
     # Avoid complaints about missing GAE libs in virtualenv
     bottle.run(app=app, server='gae')
+
