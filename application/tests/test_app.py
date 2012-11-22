@@ -6,14 +6,18 @@ Unit testing of the app.py module.
 """
 
 
-from unittest import TestCase
-from application import home
+import unittest
+from application.app import home
 
 
-class TestHome(TestCase):
+class TestHome(unittest.TestCase):
     """Testing inputs and behaviours of the home page handler."""
 
     def test_home_with_valid_params(self):
-        """Ensure home handler responds correctly given valid inputs."""
+        """Ensure home handler responds with a complete html output given
+        valid inputs."""
         result = home()
-        self.assertTrue(result != None)
+        self.assertTrue("</html>" in result)
+
+
+
