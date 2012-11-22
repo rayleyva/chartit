@@ -22,5 +22,5 @@ handlers:
   static_dir: static/img
 
 - url: /.*
-  script: application.app
+  script: main.app
 
