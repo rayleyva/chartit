@@ -15,12 +15,15 @@ def add_to_path(path):
     sys.path.insert(0, os.path.join(this_dir, path))
 
 
-def in_gae_production():
-    """As per `App Engine Docs <https://developers.google.com/appengine/docs/python/runtime#The_Environment>`_
-    the ``SERVER_SOFTWARE`` env var contains "Google App Engine" in production.
+def in_gae_development():
+    """As per `App Engine Docs <https://developers.google.com/appengine/docs/
+    python/runtime#The_Environment>`_ the ``SERVER_SOFTWARE`` env var
+    contains "Google App Engine" in production and "Development" in dev.
     :returns: True when running on Google App Engine production
     """
-    return True if "Google App Engine" in os.environ.get('SERVER_SOFTWARE', '') else False
+    if "Development" in os.environ.get('SERVER_SOFTWARE', ''):
+        return True
+    return False
 
 
 def running_as_unittest():
@@ -34,10 +37,9 @@ import bottle
 from main.app import app
 
 
-if not in_gae_production():
+if in_gae_development():
     bottle.debug(True)
 
 if not running_as_unittest:
     # Avoid complaints about missing GAE libs in virtualenv
     bottle.run(app=app, server='gae')
-

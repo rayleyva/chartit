@@ -18,6 +18,3 @@ class TestHome(unittest.TestCase):
         valid inputs."""
         result = home()
         self.assertTrue("</html>" in result)
-
-
-
