@@ -1,1 +1,6 @@
 *.pyc
+pep8.out
+pylint.out
+nosetests.xml
+coverage.xml
+
